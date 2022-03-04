@@ -1,0 +1,18 @@
+---
+import PokeData from '../../components/PokeData';
+
+export async function getStaticPaths() {
+  const pokemonsResponse = await fetch('https://pokeapi.co/api/v2/pokemon?limit=200');
+  const pokemons = await pokemonsResponse.json();
+
+  return pokemons.results.map((pokemon) => ({
+    params: { name: `${pokemon.name}` },
+    props: { pokemon },
+  }));
+}
+
+const { name } = Astro.request.params;
+
+---
+<h1>{name}</h1>
+<PokeData client:idle name={name} />

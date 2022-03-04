@@ -1,0 +1,45 @@
+---
+import { Debug } from 'astro/components';
+
+export async function getStaticPaths({ paginate }) {
+  const pokemonsResponse = await fetch('https://pokeapi.co/api/v2/pokemon?limit=200');
+  const pokemons = await pokemonsResponse.json();
+
+  return paginate(pokemons.results, {pageSize: 10});
+}
+
+const {page} = Astro.props;
+---
+<section>
+  <h1>Pokemon Pages: {page.currentPage}/{page.size}</h1>
+  <div class="list">
+    {page.data.map(item => <a href={`/pokemon/${item.name}`}>{item.name}</a>)}
+  </div>
+</section>
+
+<div class="pagination">
+  <a href={page.url.prev}>prev</a> / <a href={page.url.next}>next</a>
+</div>
+
+<Debug {page} />
+
+<style>
+h1 {
+  text-align: center;
+}
+.list {
+  display: flex;
+  flex-wrap: wrap;
+}
+.list > a {
+  display: block;
+  width: 100%;
+  padding: .5em;
+}
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-block: 1em;
+}
+</style>

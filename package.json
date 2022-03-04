@@ -1,0 +1,19 @@
+{
+  "name": "@example/framework-react",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview"
+  },
+  "devDependencies": {
+    "@types/react": "^17.0.39",
+    "astro": "^0.23.4"
+  },
+  "dependencies": {
+    "react": "^17.0.2",
+    "swr": "^1.2.2"
+  }
+}
